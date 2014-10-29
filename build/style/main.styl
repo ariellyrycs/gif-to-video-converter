@@ -32,21 +32,49 @@ section:not(.current) {
   top:15%;
   height:80%;
 }
+.image {
+  text-align: center;
+}
 .fetch-url {
   transform: scaleY(0);
   opacity:0;
   transform-origin: top;
   transition: transform 0.40s ease;
 }
-.show {
+.show-image {
+  margin-left: auto;
+  margin-right:auto;
+  border:5px solid #737373;
+  min-height:50px;
+  min-width:50px;
+  display:none;
+  opacity:0;
+  -moz-transform: scaleY(0);
+  -moz-transform-origin: top;
+  -moz-transition: transform 0.40s ease;
+  -webkit-transform: scaleY(0);
+  -webkit-transform-origin: top;
+  -webkit-transition: transform 0.40s ease;
+  -o-transform: scaleY(0);
+  -o-transform-origin: top;
+  -o-transition: transform 0.40s ease;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.40s ease;
+}
+input.show-option, img.show-option {
   opacity:1;
+  -o-transform: scaleY(1);
+  -webkit-transform: scaleY(1);
+  -moz-transform: scaleY(1);
   transform: scaleY(1);
+  display:inline;
 }
 @media only screen and (max-width: 480px) {
   .center {
     width: 100%;
   }
-  .center>*{
+  .center>* {
     width: 96%;
     margin: 20px 2%;
   }
@@ -54,6 +82,10 @@ section:not(.current) {
     width: 100%;
     margin-top:2px;
     margin-bottom:2px;
+  }
+  .show-image{
+    max-height:100px;
+    max-width:100px;
   }
 }
 @media only screen and (min-width: 480px) {
@@ -70,6 +102,10 @@ section:not(.current) {
   }
   .fetch>button:first-child{
     margin: 2px 8% 2px 0;
+  }
+  .show-image{
+    max-height:250px;
+    max-width:250px;
   }
 }
 
