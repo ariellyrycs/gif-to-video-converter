@@ -7,9 +7,11 @@ html
         main.stage
             section.current
                 form.center(method="post", id="send-gif", enctype="multipart/form-data")
-                    input.form-control
-                    button.btn.btn-default.btn-file upload
-                        input(type="file")
+                    div.fetch
+                        button.btn.btn-default.btn-file Upload
+                            input(type="file")
+                        button.btn.btn-default#show-url-file Fetch a Url
+                    input.form-control.fetch-url(placeholder="Insert a url of the GIF")
                     input.btn-primary.btn(type="submit")
             section
         script(type="text/javascript", src="./libs/jquery/dist/jquery.min.js")

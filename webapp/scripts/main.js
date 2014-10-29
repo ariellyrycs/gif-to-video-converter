@@ -8,4 +8,7 @@ $(function () {
         e.preventDefault();
         console.dir(e.target[0].value);
     });
+    $('#show-url-file').on('click', function () {
+        $('.fetch-url').addClass('show');
+    });
 });
