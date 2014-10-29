@@ -1,0 +1,21 @@
+{
+    "src": {
+        "concat": "./build/scripts/**/*.js",
+        "jade": "./build/**/*.jade",
+        "jshint": ["./build/**/*.js"],
+        "jshintAPI": "./api/**/*.js",
+        "jshintGulp": ["./tasks/**/*.js", "./gulpfile.js"],
+        "stylus": "./build/style/**/*.styl",
+        "uglify": "./webapp/scripts/main.js",
+        "remove": ["./webapp/css/**/*.css", "./webapp/scripts/**/*.js", "./webapp/views/**/*.html", "./webapp/*.html"],
+        "nodemonServer": "./api/server.js",
+        "nodemonWatch": "api/**/*.*",
+        "apiTest": "./api/test/api.js"
+    },
+    "dest": {
+        "concat": "./webapp/scripts/",
+        "jade": "./webapp/",
+        "stylus": "./webapp/css/",
+        "uglify": "./webapp/scripts/"
+    }
+}

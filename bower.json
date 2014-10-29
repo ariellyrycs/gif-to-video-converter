@@ -1,0 +1,19 @@
+{
+  "name": "nodejs-image-system",
+  "version": "0.0.0",
+  "homepage": "https://github.com/ariellyrycs/gif-to-video-converter",
+  "authors": [
+    "ariellyrycs <ariel_556@hotmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "bootstrap": "~3.2.0"
+  }
+}

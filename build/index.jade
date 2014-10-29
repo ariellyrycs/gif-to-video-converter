@@ -1,0 +1,16 @@
+doctype html
+html
+    head
+        link(rel="stylesheet", type="text/css", href="./libs/bootstrap/dist/css/bootstrap.css")
+        link(rel="stylesheet", type="text/css", href="./css/main.css")
+    body
+        main.stage
+            section.current
+                form.center(method="post", id="send-gif", enctype="multipart/form-data")
+                    input.form-control
+                    button.btn.btn-default.btn-file upload
+                        input(type="file")
+                    input.btn-primary.btn(type="submit")
+            section
+        script(type="text/javascript", src="./libs/jquery/dist/jquery.min.js")
+        script(type="text/javascript", src="./scripts/main.min.js")
