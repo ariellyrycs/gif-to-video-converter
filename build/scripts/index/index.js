@@ -14,18 +14,25 @@ $(function () {
         var file = e.target.files[0],
             imageType = /image.gif/,
             reader = new FileReader();
-        console.log(file);
         if (!file.type.match(imageType)){
             return;
         }
         reader.onload = fileOnload;
         reader.readAsDataURL(file);
-
     });
-    $('#send-gif').on('submit', function (e) {
+    /*$('#send-gif').on('submit', function (e) {
+        /*e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost:3000/',
+            data: {name:'jeje'},
+            success: function (e) {
+                console.log(e);
+            }
+        });
+    });*/
+    $('#show-url-file').on('click', function (e) {
         e.preventDefault();
-    });
-    $('#show-url-file').on('click', function () {
         $('.show-image').removeClass('show-option');
         $('.fetch-url').addClass('show-option');
     });
