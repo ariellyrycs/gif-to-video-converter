@@ -20,17 +20,23 @@ $(function () {
         reader.onload = fileOnload;
         reader.readAsDataURL(file);
     });
-    /*$('#send-gif').on('submit', function (e) {
-        /*e.preventDefault();
+    $('#send-gif').on('submit', function (e) {
+        e.preventDefault();
+        var formData = new FormData($(this)[0]);
         $.ajax({
+            url: 'http://localhost:3000/upload',
             type: 'POST',
-            url: 'http://localhost:3000/',
-            data: {name:'jeje'},
-            success: function (e) {
-                console.log(e);
+            data: formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (returndata) {
+                console.log(returndata);
             }
         });
-    });*/
+        return false;
+    });
     $('#show-url-file').on('click', function (e) {
         e.preventDefault();
         $('.show-image').removeClass('show-option');
