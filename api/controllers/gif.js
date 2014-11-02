@@ -6,7 +6,43 @@ var multiparty = require('multiparty'),
     idFile = require(__dirname + '/id-file.js'),
     util = require('util'),
     fs = require('fs'),
-    http = require('http');
+    http = require('http'),
+    url = require('url'),
+    exec = require("child_process").exec,
+    pathDest =  __dirname + '/../uploads/';
+var convert = function (file) {
+    var explode = 'convert ' + file + ' '+  pathDest + 'tmp/tmp_%05d.jpg',
+        convertToVideo = 'ffmpeg -f image2 -i ' + pathDest + 'tmp/tmp_%05d.jpg  -vf "crop=in_w-1:in_h" -vcodec libx264 ' + pathDest + 'a.mp4';
+    exec(explode, function () {
+        setTimeout(function () {
+            exec(convertToVideo);
+        }, 2000);
+    });
+};
+var downloadGIF = function(file_url) {
+    var options = {
+        host: url.parse(file_url).host,
+        port: 80,
+        path: url.parse(file_url).pathname
+    };
+    var file = fs.createWriteStream(__dirname + '/../uploads/' + idFile() + '.gif');
+    http.get(options, function(res) {
+        res.on('data', function(data) {
+            file.write(data);
+        }).on('end', function() {
+            file.end();
+            convert(file, __dirname + '/../uploads/');
+        });
+    });
+    },
+    uploadFile = function (file) {
+        fs.readFile(file, function (err, data) {
+            var newPath = __dirname + "/../uploads/" + idFile() + ".gif";
+            fs.writeFile(newPath, data, function (err) {
+                convert(newPath);
+            });
+        });
+    };
 
 
 module.exports = {
@@ -14,32 +50,13 @@ module.exports = {
         var form = new multiparty.Form();
         form.parse(req, function(err, fields, files) {
             var resp = {};
-            console.log('1');
-            //test http://www.catgifpage.com/gifs/254.gif
-            console.log(fields.url[0]);
-            var request = http.get(fields.url[0], function(response) {
-                console.log(response);
-                if (response.statusCode === 200) {
-                    var file = fs.createWriteStream(__dirname + '/jeje.gif');
-                    response.pipe(file);
-                }
-                request.setTimeout(12000, function () {
-                    request.abort();
-                });
-            });
-
-
+            //downloadGIF(fields.url[0]);
             if(files.img[0].headers['content-type'] !== 'image/gif') {
                 resp.status = 'error';
             } else {
                 resp.status = 'success';
-                console.log('2');
-                fs.readFile(files.img[0].path, function (err, data) {
-                    var newPath = __dirname + "/../uploads/" + idFile() + ".gif";
-                    fs.writeFile(newPath, data, function (err) {
-                        console.error(err);
-                    });
-                });
+
+                uploadFile(files.img[0].path);
             }
             res.end(util.inspect(resp));
         });

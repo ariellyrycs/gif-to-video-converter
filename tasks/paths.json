@@ -9,7 +9,7 @@
         "uglify": "./webapp/scripts/main.js",
         "remove": ["./webapp/css/**/*.css", "./webapp/scripts/**/*.js", "./webapp/views/**/*.html", "./webapp/*.html"],
         "nodemonServer": "./api/server.js",
-        "nodemonWatch": "api/**/*.*",
+        "nodemonWatch": ["api/*.*", "api/controllers/*.*", "api/routes/*.*"],
         "apiTest": "./api/test/api.js"
     },
     "dest": {
