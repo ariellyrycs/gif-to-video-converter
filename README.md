@@ -1,6 +1,13 @@
-This system convert a gif image to video using NodeJS
+#This system convert a gif image into a video using NodeJS
 ====================
-  - npm install
-  - bower install
-  - sudo apt-get install ffmpeg
-  - sudo apt-get install imagemagick
+##install:
+  - `npm install`
+  - `bower install`
+  - `sudo apt-get install ffmpeg`
+  - `sudo apt-get install imagemagick`
+##start server and run app:
+  - `gulp`<br>
+###port:
+  - server: localhost:3000
+  - WebApp: localhost:8001
+
