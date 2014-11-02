@@ -4,6 +4,7 @@
 'use strict';
 var multiparty = require('multiparty'),
     idFile = require(__dirname + '/id-file.js'),
+    deleteFolderRecursive = require(__dirname + '/remove-recursive.js'),
     util = require('util'),
     fs = require('fs'),
     http = require('http'),
@@ -67,7 +68,7 @@ var convert = function () {
     uploadFile = function (file) {
         var deferred = $.defer();
         fs.readFile(file, function (err, data) {
-            fs.writeFile(gifUploaded, data, function (err) {
+            fs.writeFile(gifUploaded, data, function () {
                 convert().then(function (videoDest) {
                     deferred.resolve(videoDest);
                 });
@@ -77,27 +78,31 @@ var convert = function () {
     };
 module.exports = {
     uploadGif: function(req, res) {
-        var form = new multiparty.Form();
+        var form = new multiparty.Form(),
+            tmpFolder;
         fileName = idFile();
+        tmpFolder = __dirname + '/../uploads/tmp/' + fileName;
         gifUploaded = __dirname + '/../uploads/' + fileName + '.gif';
+
         form.parse(req, function(err, fields, files) {
-            var resp = {};
+            var resp = {},
+                successful = function (videoDest) {
+                resp.status = 200;
+                resp.video = videoDest;
+                res.send(resp);
+                fs.unlinkSync(gifUploaded);
+                setInterval(function () {
+                    deleteFolderRecursive(tmpFolder);
+                },2000);
+            };
             if(fields.url[0]) {
                 if((/^.*\.(gif|GIF)$/).test(fields.url[0])){
-                    downloadGIF(fields.url[0]).then(function (videoDest) {
-                        resp.video = videoDest;
-                        resp.status = 200;
-                        res.send(resp);
-                    });
+                    downloadGIF(fields.url[0]).then(successful);
                 } else {
                     res.send({status: 400});
                 }
             } else if(files.img[0].headers['content-type'] === 'image/gif') {
-                uploadFile(files.img[0].path).then(function (videoDest) {
-                    resp.status = 200;
-                    resp.video = videoDest;
-                    res.send(resp);
-                });
+                uploadFile(files.img[0].path).then(successful);
             } else {
                 res.send({status: 400});
             }

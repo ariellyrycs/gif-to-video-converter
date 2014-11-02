@@ -9,7 +9,6 @@
   "devDependencies": {
     "del": "^0.1.3",
     "express": "^4.9.6",
-    "ffmpeg": "0.0.4",
     "gif-explode": "0.0.1",
     "gif-video": "0.0.2",
     "gulp": "^3.4.0",
@@ -26,8 +25,7 @@
     "jshint-stylish": "^1.0.0",
     "mongoose": "^3.8.17",
     "multiparty": "^4.0.0",
-    "q": "^1.0.1",
-    "videofy": "0.0.2"
+    "q": "^1.0.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
