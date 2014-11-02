@@ -6,6 +6,5 @@
 var controllers = require('./../controllers/gif.js');
 
 module.exports = function(app) {
-    app.get('/upload', controllers.getVideo);
     app.post('/upload', controllers.uploadGif);
 };
