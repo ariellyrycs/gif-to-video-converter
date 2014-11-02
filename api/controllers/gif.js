@@ -82,20 +82,24 @@ module.exports = {
         gifUploaded = __dirname + '/../uploads/' + fileName + '.gif';
         form.parse(req, function(err, fields, files) {
             var resp = {};
-            downloadGIF(fields.url[0]).then(function (videoDest) {
-                resp.video = videoDest;
-                resp.status = 'success';
-                res.end(util.inspect(resp));
-            });
-            if(files.img[0].headers['content-type'] !== 'image/gif') {
-                resp.status = 'error';
-            } else {
+            if(fields.url[0]) {
+                if((/^.*\.(gif|GIF)$/).test(fields.url[0])){
+                    downloadGIF(fields.url[0]).then(function (videoDest) {
+                        resp.video = videoDest;
+                        resp.status = 200;
+                        res.send(resp);
+                    });
+                } else {
+                    res.send({status: 400});
+                }
+            } else if(files.img[0].headers['content-type'] === 'image/gif') {
                 uploadFile(files.img[0].path).then(function (videoDest) {
-                    resp.status = 'success';
-                    console.log(videoDest);
+                    resp.status = 200;
                     resp.video = videoDest;
-                    res.end(util.inspect(resp));
+                    res.send(resp);
                 });
+            } else {
+                res.send({status: 400});
             }
         });
     }

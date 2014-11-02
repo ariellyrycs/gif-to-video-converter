@@ -5,7 +5,7 @@
 
 var express = require('express'),
     mongoose = require('mongoose'),
-    //responder = require('./http-responder'),
+    responder = require('./http-responder'),
     fs = require('fs'),
     app = express(),
     jsFiles;
@@ -13,6 +13,11 @@ var express = require('express'),
 app.set('port', process.env.PORT || 3000);
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8001');
+    next();
+});
+app.use(function (req, res, next){
+    res.type('application/json');
+    res.locals.respond = responder.setup(res);
     next();
 });
 //routes

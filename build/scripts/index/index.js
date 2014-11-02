@@ -9,7 +9,6 @@ $(function () {
         $('.fetch-url').removeClass('show-option');
         $('.show-image').addClass('show-option');
     };
-
     $('#fileupload').change(function(e) {
         var file = e.target.files[0],
             imageType = /image.gif/,
@@ -20,22 +19,33 @@ $(function () {
         reader.onload = fileOnload;
         reader.readAsDataURL(file);
     });
-    $('#send-gif').on('submit', function (e) {
-        e.preventDefault();
-        var formData = new FormData($(this)[0]);
-        $.ajax({
+    $.getVideo = function (formData) {
+        return $.ajax({
             url: 'http://localhost:3000/upload',
             type: 'POST',
             data: formData,
             async: false,
             cache: false,
             contentType: false,
-            processData: false,
-            success: function (returndata) {
-                console.log(returndata);
+            processData: false
+        }).promise();
+    };
+    $('#send-gif').on('submit', function (e) {
+        var formData;
+        e.preventDefault();
+        formData = new FormData($(this)[0]);
+        $.getVideo(formData).then(function (result) {
+            console.log(result);
+            if(result.status === 200) {
+                console.log('done');
+                $('.video-response').attr('src', result.video);
+                setTimeout(function () {
+                    $('video')[0].load();
+                }, 500);
+            } else {
+                alert('error');
             }
         });
-        return false;
     });
     $('#show-url-file').on('click', function (e) {
         e.preventDefault();
