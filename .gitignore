@@ -2,3 +2,4 @@
 .idea
 node_modules
 webapp/libs
+webapp/media/*.mp4
