@@ -5,6 +5,7 @@
   - `bower install`
   - `sudo apt-get install ffmpeg`
   - `sudo apt-get install imagemagick`
+  
 =====================
 ##start server and run app:
   - `gulp`<br>
